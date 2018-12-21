@@ -127,12 +127,12 @@ function init_gear_sets()
 	
 	
 	sets.precast.FC.CureSolace = sets.precast.FC.Cure
-    -- CureMelee spell map should default back to Healing Magic.
+	-- CureMelee spell map should default back to Healing Magic.
     
-    -- Precast sets to enhance JAs
+	-- Precast sets to enhance JAs
 	sets.precast.JA.Benediction = {body="Piety Briault"}
 
-    -- Waltz set (chr and vit)
+	-- Waltz set (chr and vit)
 	sets.precast.Waltz = {}
     
 	
@@ -273,7 +273,7 @@ function init_gear_sets()
 --- 																								 ---
 --------------------------------------------------------------------------------------------------------
 
-    -- Empy gloves +1~Reforge+1; Mending Cape.  Provides immunity for up to FIVE enfeebles for removed debuff while Divine Caress is active
+	-- Empy gloves +1~Reforge+1; Mending Cape.  Provides immunity for up to FIVE enfeebles for removed debuff while Divine Caress is active
 	sets.buff['Divine Caress'] = {hands="Orison Mitts +2",back="Mending Cape"}
 	
 	--Obi/Cape for Cure/Curaga during weather/day/storm
