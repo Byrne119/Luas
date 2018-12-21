@@ -18,10 +18,10 @@ windower.add_to_chat(123,[[   --- It is reccommended you use User-Global.lua at 
 windower.add_to_chat(123,[[   --- if you have done this, put -- before lines 17 and 18. Remove -- before sharing!]])
 
 function get_sets()
-    mote_include_version = 2
+	mote_include_version = 2
     
     -- Load and initialize the include file.
-    include('Mote-Include.lua')
+	include('Mote-Include.lua')
 end
 
 
@@ -36,8 +36,8 @@ end
 --================================================--
 -- Setup vars that are user-independent.  state.Buff vars initialized here will automatically be tracked.
 function job_setup()
-    state.Buff['Afflatus Solace'] = buffactive['Afflatus Solace'] or false
-    state.Buff['Afflatus Misery'] = buffactive['Afflatus Misery'] or false
+	state.Buff['Afflatus Solace'] = buffactive['Afflatus Solace'] or false
+	state.Buff['Afflatus Misery'] = buffactive['Afflatus Misery'] or false
 	state.Moving = M(false, "moving")
 end
 
@@ -54,14 +54,14 @@ end
 -- Setup vars that are user-dependent.  Can override this function in a sidecar file.
 function user_setup()
 
-    state.OffenseMode:options('None', 'Normal')
-    state.CastingMode:options('Normal', 'Resistant')
-    state.IdleMode:options('Normal', 'PDT' ,'Refresh')
+	state.OffenseMode:options('None', 'Normal')
+	state.CastingMode:options('Normal', 'Resistant')
+	state.IdleMode:options('Normal', 'PDT' ,'Refresh')
 	state.ZoneRing = M('None','Warp', 'Holla', 'Dem', 'Mea')
 
 
-    select_default_macro_book()
-    set_lockstyle()
+	select_default_macro_book()
+	set_lockstyle()
 	
 	send_command('bind f5 gs c cycle ZoneRing')
 	
@@ -77,20 +77,20 @@ end
 
 function user_unload()
 
-        send_command('unbind ^f9')
-        send_command('unbind ^f10')
+		send_command('unbind ^f9')
+		send_command('unbind ^f10')
 		send_command('unbind ^f11')
 		send_command('unbind ^f12')
        
-        send_command('unbind !f9')
-        send_command('unbind !f10')
+		send_command('unbind !f9')
+		send_command('unbind !f10')
 		send_command('unbind !f11')
-        send_command('unbind !f12')
+		send_command('unbind !f12')
  
-        send_command('unbind f9')
-        send_command('unbind f10')
-        send_command('unbind f11')
-        send_command('unbind f12')
+		send_command('unbind f9')
+		send_command('unbind f10')
+		send_command('unbind f11')
+		send_command('unbind f12')
 		send_command('unbind f5')
 		
 end
@@ -113,10 +113,10 @@ function init_gear_sets()
 	sets.precast.FC['Enhancing Magic'] = set_combine(sets.precast.FC, {waist="Siegel Sash"})
 
 	
-    sets.precast.FC.Stoneskin = set_combine(sets.precast.FC['Enhancing Magic'], {head="Umuthi Hat"})
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC['Enhancing Magic'], {head="Umuthi Hat"})
 	
 
-    sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
+	sets.precast.FC['Healing Magic'] = set_combine(sets.precast.FC, {legs="Orison Pantaloons +2"})
 	
 	
 	sets.precast.FC.StatusRemoval = sets.precast.FC['Healing Magic']
@@ -130,10 +130,10 @@ function init_gear_sets()
     -- CureMelee spell map should default back to Healing Magic.
     
     -- Precast sets to enhance JAs
-    sets.precast.JA.Benediction = {body="Piety Briault"}
+	sets.precast.JA.Benediction = {body="Piety Briault"}
 
     -- Waltz set (chr and vit)
-    sets.precast.Waltz = {}
+	sets.precast.Waltz = {}
     
 	
 --==================================================--
@@ -228,10 +228,10 @@ function init_gear_sets()
 --                             |_|                                               --
 --===============================================================================--
 
-    sets.precast.WS = {}
+	sets.precast.WS = {}
     
 	
-    sets.precast.WS['Flash Nova'] = {}
+	sets.precast.WS['Flash Nova'] = {}
     
 	
 --=================================--
@@ -260,7 +260,7 @@ function init_gear_sets()
 --====================================================--
 
 	--aim for 26% haste, then acc/multi-attack/storeTP
-    sets.engaged = {}
+	sets.engaged = {}
 
 	
 --------------------------------------------------------------------------------------------------------	
@@ -274,14 +274,14 @@ function init_gear_sets()
 --------------------------------------------------------------------------------------------------------
 
     -- Empy gloves +1~Reforge+1; Mending Cape.  Provides immunity for up to FIVE enfeebles for removed debuff while Divine Caress is active
-    sets.buff['Divine Caress'] = {hands="Orison Mitts +2",back="Mending Cape"}
+	sets.buff['Divine Caress'] = {hands="Orison Mitts +2",back="Mending Cape"}
 	
 	--Obi/Cape for Cure/Curaga during weather/day/storm
 	--Many luas have an argument you can borrow for returning specific obis based on element if you've not made this yet.  You can google it if need be.
 	sets.Weather = {waist="Hachirin-no-Obi"}
 	sets.latent_refresh = {waist="Fucho-no-Obi"}
 	sets.Adoulin = {body="Councilor's Garb",}
-    sets.MoveSpeed = {feet = "Herald's Gaiters",}
+	sets.MoveSpeed = {feet = "Herald's Gaiters",}
 	
 end
 
