@@ -364,6 +364,11 @@ windower.raw_register_event('prerender',function()
     end
 end)
 
+windower.register_event('zone change', function()
+
+	send_command('gs c set ZoneRing None')
+	
+end)
 --=================================================================--
 --  _____                          _     _                         --
 -- |  ___|  _   _   _ __     ___  | |_  (_)   ___    _ __    ___   --
