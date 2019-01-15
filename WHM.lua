@@ -12,10 +12,6 @@
                                                                       Y8b d88P          
                                                                        "Y88P"           
 ]]
-windower.add_to_chat(123,[[White Mage Lua Author: Kiddeath #7894 (Discord); Byrne(Asura)]])
-windower.add_to_chat(160,[[Feel free to DM me if you have any questions or suggestions for this file.]])
-windower.add_to_chat(123,[[   --- It is reccommended you use User-Global.lua at https://github.com/Byrne119/Gearswap ]]) --Right click and save link as...
-windower.add_to_chat(123,[[   --- if you have done this, put -- before lines 17 and 18. Remove -- before sharing!]])
 
 function get_sets()
 	mote_include_version = 2
