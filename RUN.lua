@@ -11,8 +11,8 @@
                                                                                                  
                                                                                                  
 ]]
-windower.add_to_chat(123,[[RUN Lua Author: Kiddeath #7894 (Discord); Byrne(Asura)]])
-windower.add_to_chat(160,[[Feel free to DM me if you have any questions or suggestions for this file.]])
+windower.add_to_chat(123,[[RUN Lua Author: Byrne #7894 (Discord); Byrne(Asura); Archiie (Legend support and debugging)]])
+windower.add_to_chat(160,[[Movement speed by default will not equip when engaged, Press F1 to handle auto-kiting while engaged.]])
 
 -- Initialization function for this job file.
 function get_sets()
@@ -31,8 +31,8 @@ end
 --                                         |      --
 --================================================--
 function job_setup()
-	playermoving  = M(false, "moving")
-	state.Buff.Battuta = buffactive.battuta or false
+setupTextWindow(1400, 600)
+	    state.Moving = M('false', 'true')
 end
 
 --====================================================--
@@ -46,14 +46,15 @@ end
 --====================================================--
 
 function user_setup()
-	state.OffenseMode:options('Normal','DTmeva','TH','HybridDPS')
-	state.IdleMode:options('Normal','Tanking')
+    state.OffenseMode:options('Normal','DTmeva','TH','HybridDPS')
+    state.IdleMode:options('Normal','Tanking')
 	state.WeaponLockMode = M('Unlocked','Locked')
 	state.DoomMode = M('OFF', 'Doom')
 	state.ZoneRing = M('None','Warp', 'Holla', 'Dem', 'Mea')
-
-	send_command('bind gs c set IdleMode Tanking; gs c set OffenseMode DTmeva')
-
+	state.EngagedMoving = M('Disabled','Enabled')
+	
+	send_command('gs c set IdleMode Tanking; gs c set OffenseMode DTmeva')
+	send_command('bind f1 gs c cycle EngagedMoving')
 	send_command('bind f10 gs c cycle IdleMode')
 	send_command('bind f12 gs c cycle WeaponLockMode')
 	send_command('bind f9 gs c cycle OffenseMode')
@@ -62,7 +63,8 @@ function user_setup()
 	send_command('bind f7 gs c set OffenseMode Normal')
 	send_command('bind f8 gs c set OffenseMode HybridDPS')
 	send_command('bind f5 gs c cycle ZoneRing')
-
+	
+	
 	select_default_macro_book()
 end
 
@@ -75,21 +77,22 @@ end
 
 function user_unload()
 
-	send_command('unbind ^f9')
-	send_command('unbind ^f10')
-	send_command('unbind ^f11')
-	send_command('unbind ^f12')
-
-	send_command('unbind !f9')
-	send_command('unbind !f10')
-	send_command('unbind !f11')
-	send_command('unbind !f12')
-
-	send_command('unbind f9')
-	send_command('unbind f10')
-	send_command('unbind f11')
-	send_command('unbind f12')
-	send_command('unbind f5')
+        send_command('unbind ^f9')
+        send_command('unbind ^f10')
+		send_command('unbind ^f11')
+		send_command('unbind ^f12')
+       
+        send_command('unbind !f9')
+        send_command('unbind !f10')
+		send_command('unbind !f11')
+        send_command('unbind !f12')
+ 
+        send_command('unbind f9')
+        send_command('unbind f10')
+        send_command('unbind f11')
+        send_command('unbind f12')
+		send_command('unbind f5')
+		send_command('unbind f1')
 		
 end
 
@@ -312,7 +315,6 @@ function init_gear_sets()
 	end
 	
 
-
 --======================================================================--
 --    __  __                                                     _      --
 --   |  \/  |   ___   __   __   ___   _ __ ___     ___   _ __   | |_    --
@@ -336,25 +338,45 @@ windower.raw_register_event('prerender',function()
     mov.counter = mov.counter + 1;
     if mov.counter>15 then
         local pl = windower.ffxi.get_mob_by_index(player.index)
-        if pl and pl.x and mov.x then
-            dist = math.sqrt( (pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2 )
-            if dist > 1 and not moving then
-                playermoving.value = true
-                send_command('gs c update')
+        if pl and pl.x and mov.x and state.EngagedMoving.Value == 'Disabled' then
+			if player.status ~= 'Engaged' then
+				dist = math.sqrt( (pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2 )
+				if dist > 1 and not moving then
+					state.Moving.value = true
+					send_command('gs c update')
+					if world.area:contains("Adoulin") then
+						send_command('gs equip sets.Adoulin')
+					else
+						send_command('gs equip sets.MoveSpeed')
+					end
+
+					moving = true
+
+				elseif dist < 1 and moving then
+					state.Moving.value = false
+					send_command('gs c update')
+					moving = false
+				end
+			end
+        elseif pl and pl.x and mov.x and state.EngagedMoving.Value == 'Enabled' then
+			dist = math.sqrt( (pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2 )
+			if dist > 1 and not moving then
+				state.Moving.value = true
+				send_command('gs c update')
 				if world.area:contains("Adoulin") then
-                send_command('gs equip sets.Adoulin')
+					send_command('gs equip sets.Adoulin')
 				else
-                send_command('gs equip sets.MoveSpeed')
-                end
+					send_command('gs equip sets.MoveSpeed')
+				end
 
-                moving = true
+				moving = true
 
-            elseif dist < 1 and moving then
-                playermoving.value = false
-                send_command('gs c update')
-                moving = false
-            end
-        end
+			elseif dist < 1 and moving then
+				state.Moving.value = false
+				send_command('gs c update')
+				moving = false
+			end
+		end
         if pl and pl.x then
             mov.x = pl.x
             mov.y = pl.y
@@ -366,7 +388,9 @@ end)
 
 windower.register_event('zone change', function()
 
-	send_command('gs c set ZoneRing None')
+	if state.ZoneRing.Value ~= 'None' then
+		send_command('gs c set ZoneRing None')
+	end
 	
 end)
 --=================================================================--
@@ -377,6 +401,8 @@ end)
 -- |_|      \__,_| |_| |_|  \___|  \__| |_|  \___/  |_| |_| |___/  --
 --                                                                 --
 --=================================================================--
+
+
 
 function job_aftercast(spell, action, spellMap, eventArgs)
 
@@ -408,6 +434,8 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	
 	if spell.english == 'Phalanx' and buffactive['Defense Boost'] and buffactive['Stoneskin'] and buffactive['Phalanx'] then
 		equip(set_combine(sets.midcast['Phalanx'], {main="Deacon Sword"}))
+	elseif spell.english == 'Phalanx' and buffactive['Phalanx'] then
+		send_command('wait 0.2;input //cancel Phalanx')
 	end
 	
 	if spell.english == 'Phalanx' and not (buffactive['phalanx'] or buffactive['aquaveil']) then 
@@ -416,6 +444,10 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 	
 	if spell.english == 'Aquaveil' and not buffactive['Aquaveil'] then 
 		equip(set_combine(sets.midcast['Aquaveil'], sets.SIRD2))
+	end
+	
+	if spell.skill == 'Enhancing Magic' and buffactive['Embolden'] and spell.target.type == 'SELF' then
+		equip(sets.Embolden)
 	end
 	
 end
@@ -448,6 +480,9 @@ function job_midcast(spell, action, spellMap, eventArgs)
 		equip(sets.engaged.DTmeva)
 	end
 	
+	if spell.english == 'Stoneskin' and buffactive['Stoneskin'] then
+		send_command('wait 1;input //cancel Stoneskin')
+	end
 	
 end
 
@@ -572,7 +607,7 @@ end
 
 function customize_melee_set(meleeSet)
 	
-	if state.Buff.Battuta then
+	if buffactive['Battuta'] then
         meleeSet = set_combine(meleeSet, sets.Battuta)
     end
 
@@ -649,5 +684,145 @@ end
 function get_obi(element)
     if element and elements.obi_of[element] then
         return (player.inventory[elements.obi_of[element]] or player.wardrobe[elements.obi_of[element]]) and elements.obi_of[element]
+    end
+end
+
+function add_to_chat(command)
+	if handle_unset and command == 'add_to_chat' then
+	end
+end
+
+
+--This is used to make sure we will attempt to refresh the window every second
+--prerender is actually faster than 1 second as it is called every few milliseconds
+time_start = os.time()
+windower.register_event(
+    "prerender",
+    function()
+        --Items we want to check every second
+        if os.time() > time_start then
+            --We want to keep this reset each time we enter so its called every second
+            time_start = os.time()
+
+            --Simply refreshes the window
+            refreshWindow()
+        end
+    end
+)
+
+--Window
+--Default To Set Up the Text Window
+
+-- Place this in the job_function()
+-- setupTextWindow(1400, 600)
+
+-- You can toggle this with a command to turn the entire window on and off
+-- visible = false
+visible = true
+
+function setupTextWindow(pos_x, pos_y)
+    tb_name = "run_gs_helper"
+    bg_visible = true
+    textinbox = " "
+
+    windower.text.create(tb_name)
+    -- table_name, x, y
+    windower.text.set_location(tb_name, pos_x, pos_y)
+    -- transparency, rgb
+    windower.text.set_bg_color(tb_name, 170, 30, 30, 40)
+    windower.text.set_color(tb_name, 255, 255, 161, 61)
+    windower.text.set_font(tb_name, "Trebuchet MS")
+    windower.text.set_font_size(tb_name, 13)
+    windower.text.set_bold(tb_name, true)
+    windower.text.set_italic(tb_name, false)
+    windower.text.set_text(tb_name, textinbox)
+    windower.text.set_bg_visibility(tb_name, bg_visible)
+    windower.text.set_visibility(tb_name, visible)
+end
+
+--Hanldles refreshing the current text window
+-- refreshWindow() should be called anytime you perform an action that would change what is on the window
+function refreshWindow()
+    textinbox = " " -- This is what gets drawn on the screen at the end
+    textColorNewLine = "\\cr \n" --Placed at the end of a line to end the color and make a new line after
+    textColorEnd = " \\cr" -- Placed at the end of what you are displaying to end the given color
+    textColor = "\\cs(125, 255, 125)" --RGB color setting
+
+    if not visible then --If not 'true' then it will hide the window all together
+        textinbox = ""
+        windower.text.set_text(tb_name, textinbox)
+        return
+    end
+
+    --If you want to Toggle this section uncomment the if and end
+    --You'll need to use a variable like this in user_setup():
+    --state.textHideMode = M(false, "Hide Mode")
+    --then you can toggle it with Mote's
+    -- //gs c toggle textHideMode
+    
+    -- if not state.textHideMode.value then
+	
+		textinbox = textinbox .. drawTitle("  Local Keybinds  ")
+		textinbox = textinbox .. textColor .. "(F8) Engaged Mode -> HybridDPS" .. textColorNewLine
+		textinbox = textinbox .. textColor .. "(F11) Idle & Engaged -> Tanking" .. textColorNewLine
+		textinbox = textinbox .. textColor .. "(CTRL+F11) Idle & Engaged -> Normal" .. textColorNewLine
+	
+        textinbox = textinbox .. drawTitle("  Current Settings  ") --Draws the title and puts '=', example ====     Mode     ==== around the title passed in
+        textinbox = textinbox .. textColor .. "Idle Mode (F10) : " .. tostring(state.IdleMode.current) .. textColorNewLine
+		textinbox = textinbox .. textColor .. "TP Mode (F9) : " .. tostring(state.OffenseMode.current) .. textColorNewLine
+		
+		if state.WeaponLockMode.value == 'Locked' then
+			textinbox = textinbox .. "\\cs(255, 255, 255)" .. "Lock Mode (F12) : " .. "\\cr" .. "\\cs(255, 75, 75)" .. tostring(state.WeaponLockMode.current) .. textColorNewLine
+		elseif state.WeaponLockMode.value == 'Unlocked' then
+			textinbox = textinbox .. "\\cs(255, 255, 255)" .. "Lock Mode (F12) : " .. "\\cr" .. "\\cs(255, 255, 255)" .. tostring(state.WeaponLockMode.current) .. textColorNewLine
+		end
+       
+		
+		if state.ZoneRing.current == 'Warp' then
+			textinbox = textinbox .. "Zone Ring (F5) : " .. "\\cs(255, 75, 255)" .. tostring(state.ZoneRing.current) .. textColorNewLine
+		elseif state.ZoneRing.current == 'Holla' then
+			textinbox = textinbox .. "Zone Ring (F5) : " .. "\\cs(255, 75, 75)" .. tostring(state.ZoneRing.current) .. textColorNewLine
+		elseif state.ZoneRing.current == 'Dem' then
+			textinbox = textinbox .. "Zone Ring (F5) : " .. "\\cs(0, 175, 255)" .. tostring(state.ZoneRing.current) .. textColorNewLine
+		elseif state.ZoneRing.current == 'Mea' then
+			textinbox = textinbox .. "Zone Ring (F5) : " .. "\\cs(255, 255, 75)" .. tostring(state.ZoneRing.current) .. textColorNewLine
+		elseif state.ZoneRing.current == 'None' then
+			textinbox = textinbox .. "Zone Ring (F5) : " .. "\\cs(255, 255, 255)" .. tostring(state.ZoneRing.current) .. textColorNewLine
+		end
+		if state.Moving.value == 'false' then
+			textinbox = textinbox .. "Player Moving (Auto) : " .. "\\cs(255, 100, 100)" .. tostring(state.Moving.value) .. "\\cr \n"
+		else
+			textinbox = textinbox .. "Player Moving (Auto) : " .. "\\cs(100, 255, 100)" .. tostring(state.Moving.value) .. "\\cr \n"
+		end
+			textinbox = textinbox .. textColor .. "Engaged Movespeed (F1) : " .. tostring(state.EngagedMoving.current) .. textColorNewLine
+
+
+
+    windower.text.set_text(tb_name, textinbox)
+end
+
+
+--Creates the Title for a section in the Text Screen
+function drawTitle(title)
+    return "\\cs(200, 222, 255)" .. pad(tostring(title), 6, ":") .. "\\cr \n"
+end
+
+--Pads a given chara on both sides (centering with left justification)
+function pad(s, l, c)
+    local srep = string.rep
+    local c = c or " "
+
+    local res1 = srep(c, l) .. s -- pad to half-length s
+    local res2 = res1 .. srep(c, l) -- right-pad our left-padded string to the full length
+
+    return res2
+end
+
+--Takes a condition and returns a given value based on if it is true or false
+function ternary(cond, T, F)
+    if cond then
+        return T
+    else
+        return F
     end
 end
