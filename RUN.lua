@@ -31,8 +31,8 @@ end
 --                                         |      --
 --================================================--
 function job_setup()
-setupTextWindow(1400, 600)
-	    state.Moving = M('false', 'true')
+	setupTextWindow(1400, 600)
+	state.Moving = M('false', 'true')
 end
 
 --====================================================--
@@ -46,13 +46,13 @@ end
 --====================================================--
 
 function user_setup()
-    state.OffenseMode:options('Normal','DTmeva','TH','HybridDPS')
-    state.IdleMode:options('Normal','Tanking')
+	state.OffenseMode:options('Normal','DTmeva','TH','HybridDPS')
+	state.IdleMode:options('Normal','Tanking')
 	state.WeaponLockMode = M('Unlocked','Locked')
 	state.DoomMode = M('OFF', 'Doom')
 	state.ZoneRing = M('None','Warp', 'Holla', 'Dem', 'Mea')
 	state.EngagedMoving = M('Disabled','Enabled')
-	
+
 	send_command('gs c set IdleMode Tanking; gs c set OffenseMode DTmeva')
 	send_command('bind f1 gs c cycle EngagedMoving')
 	send_command('bind f10 gs c cycle IdleMode')
@@ -77,22 +77,22 @@ end
 
 function user_unload()
 
-        send_command('unbind ^f9')
-        send_command('unbind ^f10')
-		send_command('unbind ^f11')
-		send_command('unbind ^f12')
-       
-        send_command('unbind !f9')
-        send_command('unbind !f10')
-		send_command('unbind !f11')
-        send_command('unbind !f12')
- 
-        send_command('unbind f9')
-        send_command('unbind f10')
-        send_command('unbind f11')
-        send_command('unbind f12')
-		send_command('unbind f5')
-		send_command('unbind f1')
+	send_command('unbind ^f9')
+	send_command('unbind ^f10')
+	send_command('unbind ^f11')
+	send_command('unbind ^f12')
+
+	send_command('unbind !f9')
+	send_command('unbind !f10')
+	send_command('unbind !f11')
+	send_command('unbind !f12')
+
+	send_command('unbind f9')
+	send_command('unbind f10')
+	send_command('unbind f11')
+	send_command('unbind f12')
+	send_command('unbind f5')
+	send_command('unbind f1')
 		
 end
 
