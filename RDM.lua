@@ -45,7 +45,7 @@ end
 --================================================--
 
 function job_setup()
-setupTextWindow(1525, 1188)
+setupTextWindow(1400, 600)
 --[[These numbers determine where your table will show update
 This is affected both by your resolution and your scaling mode so
 you may need to lower these numbers quite significantly depending
@@ -66,8 +66,8 @@ end
 
 function user_setup()
 	state.OffenseMode:options()
-    state.WeaponLockMode = M('Unlocked', 'Locked')
-    state.IdleMode:options('Normal', 'PDT', 'MDT', 'Town')
+	state.WeaponLockMode = M('Unlocked', 'Locked')
+	state.IdleMode:options('Normal', 'PDT', 'MDT', 'Town')
 	state.CastingMode:options('Normal', 'Burst')
 	state.Enfeeb = M('Accuracy', 'Potency', 'Skill')
 	state.ZoneRing = M('None','Warp', 'Holla', 'Dem', 'Mea')
@@ -75,9 +75,9 @@ function user_setup()
 	state.EngagedMoving = M('Disabled','Enabled')
 	state.DoomMode = M('OFF', 'Doom')
 
-    state.Moving = M('false', 'true')
-    
-    select_default_macro_book()
+	state.Moving = M('false', 'true')
+
+	select_default_macro_book()
 
 	send_command('bind f1 gs c cycle EngagedMoving')
 	send_command('bind f9 gs c cycle CastingMode')
@@ -88,7 +88,7 @@ function user_setup()
 	send_command('bind f6 gs equip sets.default_melee_weapons;wait 0.2;gs c set WeaponLockMode Locked')
 	send_command('bind f8 gs c set WeaponLockMode Unlocked;wait 0.2;input //gs equip sets.default_melee_weapons;wait 0.2;gs c set WeaponLockMode Locked')
 	
-    select_default_macro_book()
+	select_default_macro_book()
 end
 
  
@@ -102,30 +102,30 @@ end
 
 function user_unload()
 
-        send_command('unbind ^f9')
-        send_command('unbind ^f10')
-		send_command('unbind ^f11')
-		send_command('unbind ^f12')
-		send_command('unbind f8')
-       
-        send_command('unbind !f9')
-        send_command('unbind !f10')
-		send_command('unbind !f11')
-        send_command('unbind !f12')
- 
-        send_command('unbind f9')
-        send_command('unbind f10')
-        send_command('unbind f11')
-        send_command('unbind f12')
-		send_command('unbind f5')
-		send_command('unbind f1')
-		
-		send_command('unbind -')
-		send_command('unbind =')
-		enable('neck')
-		enable('main')
-		enable('sub')
-		enable('range')
+	send_command('unbind ^f9')
+	send_command('unbind ^f10')
+	send_command('unbind ^f11')
+	send_command('unbind ^f12')
+	send_command('unbind f8')
+
+	send_command('unbind !f9')
+	send_command('unbind !f10')
+	send_command('unbind !f11')
+	send_command('unbind !f12')
+
+	send_command('unbind f9')
+	send_command('unbind f10')
+	send_command('unbind f11')
+	send_command('unbind f12')
+	send_command('unbind f5')
+	send_command('unbind f1')
+
+	send_command('unbind -')
+	send_command('unbind =')
+	enable('neck')
+	enable('main')
+	enable('sub')
+	enable('range')
 end
 
 -- Define sets and vars used by this job file.
@@ -153,24 +153,24 @@ function init_gear_sets()
 --==================================================--
 
 
-    sets.precast.JA['Chainspell'] = {body="Vitiation Tabard +3"}
-    
-    --Red Mage gets plenty of Fast Cast through traits and gear
+	sets.precast.JA['Chainspell'] = {body="Vitiation Tabard +3"}
+
+	--Red Mage gets plenty of Fast Cast through traits and gear
 	--So I would reccomend avoiding quick cast due to equipping errors.
 	sets.precast.FC = {
 		ammo="Sapience Orb",
-        head="Carmine Mask +1",
+		head="Carmine Mask +1",
 		ear2="Loquacious Earring",
-        body="Vitiation Tabard +3",
+		body="Vitiation Tabard +3",
 		neck="Orunmila's Torque",
 		hands="Leyline Gloves",
 		ring1="Prolix Ring",
 		ring2="Kishar Ring",
-        back="Swith Cape +1",
+		back="Swith Cape +1",
 		waist="Flume Belt +1",
 		legs="Psycloth Lappas",
 		feet="Carmine Greaves +1"}
-	
+
 	--don't play with the name of this set, it breaks very easily. (Libraries problem)
 	sets.precast.FC.Impact = set_combine(sets.precast.FC, {
 		main="Terra's Staff",
@@ -188,17 +188,17 @@ function init_gear_sets()
 		left_ring="Prolix Ring",
 		right_ring="Kishar Ring",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},})
-		
+
 	--[[this set needs to be a clone of sets.precast.FC.Impact
-		I know this setup seems insane and unneccessary, but Impact requires
-		the Twilight cloak to be equipped to begin casting unlike other spells
-		and as such I must define sets.precast.FC.Impact to sets.precast.FC.ImpactQC
-		to check for Chainspell or Spontaneity, then I must redefine it to
-		This set when you cast it next without those buffs active.
-		It's complicated, but I promise it's neccessary.
-		Also, do not make this a setcombine with the previous Impact FC set
-		or it will defeat it's purpose.]]
-	
+	I know this setup seems insane and unneccessary, but Impact requires
+	the Twilight cloak to be equipped to begin casting unlike other spells
+	and as such I must define sets.precast.FC.Impact to sets.precast.FC.ImpactQC
+	to check for Chainspell or Spontaneity, then I must redefine it to
+	This set when you cast it next without those buffs active.
+	It's complicated, but I promise it's neccessary.
+	Also, do not make this a setcombine with the previous Impact FC set
+	or it will defeat it's purpose.]]
+
 	sets.precast.FC.Impact2 = {
 		main="Terra's Staff",
 		sub="Irenic Strap +1",
@@ -215,7 +215,7 @@ function init_gear_sets()
 		left_ring="Prolix Ring",
 		right_ring="Kishar Ring",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
-		
+
 	sets.precast.FC.ImpactQC = {
 		main="Raetic Staff +1",
 		sub="Enki Strap",
@@ -233,8 +233,8 @@ function init_gear_sets()
 		right_ring="Stikini Ring",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
 
-    sets.precast.FC.Stoneskin = set_combine(sets.precast.FC, {waist="Siegel Sash"})
-	
+	sets.precast.FC.Stoneskin = set_combine(sets.precast.FC, {waist="Siegel Sash"})
+
 	sets.precast.FC.Cure = set_combine(sets.precast.FC, {main="Tamaxchi"})
        
 
@@ -248,47 +248,47 @@ function init_gear_sets()
 --                                                  --
 --==================================================--
 		
-		
-    sets.midcast.FastRecast = {}
 
-    sets.midcast.Cure = {
+	sets.midcast.FastRecast = {}
+
+	sets.midcast.Cure = {
 		main="Tamaxchi",
-        head="Gendewitha Caubeen +1",
+		head="Gendewitha Caubeen +1",
 		neck="Incanter's Torque",
 		ear1="Mendicant's Earring",
 		ear2="Loquacious Earring",
-        body="Vrikodara Jupon",
+		body="Vrikodara Jupon",
 		hands="Telchine Gloves",
 		ring1="Dark Ring",
 		ring2="Defending Ring",
-        back="Solemnity Cape",
+		back="Solemnity Cape",
 		waist="Flume Belt +1",
 		legs="Atrophy Tights +3",
 		feet="Medium's Sabots"}
 
-    sets.midcast.Cursna = {
-        head="Gendewitha Caubeen +1",
+	sets.midcast.Cursna = {
+		head="Gendewitha Caubeen +1",
 		neck="Malison Medallion",
 		ear1="Roundel Earring",
 		ear2="Loquacious Earring",
-        body="Vrikodara Jupon",
+		body="Vrikodara Jupon",
 		hands="Serpentes Cuffs",
 		ring1="Ephedra Ring",
 		ring2="Ephedra Ring",
-        back="Ghostfyre Cape",
+		back="Ghostfyre Cape",
 		waist="Witful Belt",
 		legs="Atrophy Tights +3",
 		feet="Gendewitha Galoshes"}
-        
-    sets.midcast.Curaga = sets.midcast.Cure
-	
-    sets.midcast.CureSelf = set_combine(sets.midcast.Cure, {
+
+	sets.midcast.Curaga = sets.midcast.Cure
+
+	sets.midcast.CureSelf = set_combine(sets.midcast.Cure, {
 		ring1="Dark Ring",
 		ring2="Kunaji Ring",
 		hands="Buremte gloves",
 		waist="Gishdubar Sash"})
-		
-    sets.midcast['Enhancing Magic'] = {
+
+	sets.midcast['Enhancing Magic'] = {
 		main="Pukulatmuj +1",
 		sub="Ammurapi Shield",
 		ammo="Regal Gem",
@@ -304,7 +304,7 @@ function init_gear_sets()
 		left_ring="Stikini Ring",
 		right_ring="Stikini Ring",
 		back="Ghostfyre cape",}
-		
+
 	sets.midcast['Enhancing Magic'].SelfDuration = {
 		main="Pukulatmuj +1",
 		sub="Ammurapi Shield",
@@ -321,7 +321,7 @@ function init_gear_sets()
 		left_ring="Stikini Ring",
 		right_ring="Stikini Ring",
 		back="Ghostfyre cape",
-	}
+		}
 
 	sets.midcast['Enhancing Magic'].Skill = {
 		main="Pukulatmuj +1",
@@ -339,9 +339,9 @@ function init_gear_sets()
 		left_ring="Stikini Ring",
 		right_ring="Stikini Ring",
 		back="Ghostfyre Cape",}
-	
+
 	sets.midcast.Phalanx = set_combine(sets.midcast['Enhancing Magic'].Skill, {})
-	
+
 	sets.midcast.PhalanxSelf = set_combine(sets.midcast.Phalanx, {
 		main="Egeking",
 		body={ name="Taeon Tabard", augments={'Accuracy+19 Attack+19','Spell interruption rate down -10%','Phalanx +3',}},
@@ -351,22 +351,22 @@ function init_gear_sets()
 		neck="Moonlight Necklace",
 		waist="Sanctuary Obi",
 		})
-		
+
 	sets.midcast['Enhancing Magic'].GainSpell = set_combine(sets.midcast['Enhancing Magic'].SelfDuration, {hands="Vitiation gloves +3"})
-		
-    sets.midcast.Refresh = set_combine(sets.midcast['Enhancing Magic'], {
+
+	sets.midcast.Refresh = set_combine(sets.midcast['Enhancing Magic'], {
 		body="Atrophy Tabard +3",
 		head="Amalric Coif",
 		legs="Lethargy Fuseau +1",
 		waist="Gishdubar sash"})
 
-    sets.midcast.Stoneskin = set_combine(sets.midcast['Enhancing Magic'], {
+	sets.midcast.Stoneskin = set_combine(sets.midcast['Enhancing Magic'], {
 		waist="Siegel Sash",
 		neck="Nodens Gorget",
 		hands="Stone Mufflers",
 		legs="Haven hose",
 		ear2="Earthcry Earring"})
-	
+
 	sets.midcast.Aquaveil = {
 		main="Pukulatmuj +1",
 		sub="Ammurapi Shield",
@@ -383,10 +383,10 @@ function init_gear_sets()
 		left_ring="Stikini Ring",
 		right_ring="Stikini Ring",
 		back="Ghostfyre Cape",}
-	
+
 	--Repose for WHM sub; this spell is not enfeebling magic so use M.acc and divine skill.
 	sets.midcast.Repose = {
-	    main="Raetic Staff +1",
+		main="Raetic Staff +1",
 		sub="Enki Strap",
 		ammo="Regal Gem",
 		head={ name="Chironic Hat", augments={'Mag. Acc.+25 "Mag.Atk.Bns."+25','"Conserve MP"+2','MND+5','Mag. Acc.+15','"Mag.Atk.Bns."+2',}},
@@ -401,30 +401,30 @@ function init_gear_sets()
 		left_ring="Stikini Ring",
 		right_ring="Stikini Ring",
 		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},}
-	
+
 	--set does not need gear; is not referenced.
 	sets.midcast['Enfeebling Magic'] = {}
 	--Enfeebling sets for Mnd and Int enfeebles will really only change which cape you are using	
 	sets.midcast.IntEnfeebles = {back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
-	
-    sets.midcast['Enfeebling Magic'].Accuracy = {
+
+	sets.midcast['Enfeebling Magic'].Accuracy = {
 		main="Grioavolr",
 		sub="Enki Strap",
 		range=empty,
 		ammo="Regal Gem",
-        head="Viti. Chapeau +3",
+		head="Viti. Chapeau +3",
 		neck="Duelist's Torque +2",
 		ear1="Dignitary's Earring",
 		ear2="Regal Earring",
-        body="Atrophy Tabard +3",
+		body="Atrophy Tabard +3",
 		hands={ name="Kaykaus Cuffs +1", augments={'MP+80','MND+12','Mag. Acc.+20',}},
 		ring1="Stikini ring",
 		ring2="Stikini Ring",
-        back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},
+		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},
 		waist="Luminary Sash",
 		legs={ name="Chironic Hose", augments={'Mag. Acc.+22 "Mag.Atk.Bns."+22','MND+6','Mag. Acc.+14',}},
 		feet="Vitiation Boots +3",}
-	
+
 	--Accuracy is the ONLY concern for this set, used for boolean spells such as silence. Silence either lands or it doesn't, there is no potency.
 	--When using eletta bow for m.acc, if the set you are combining with uses gem, you must specify empty ammo to prevent misequip.
 	sets.midcast['Enfeebling Magic'].MaxAccuracy = {		
@@ -432,21 +432,21 @@ function init_gear_sets()
 		sub="Enki Strap",
 		range="Eletta Bow",
 		ammo=empty,
-        head="Viti. Chapeau +3",
+		head="Viti. Chapeau +3",
 		neck="Duelist's Torque +2",
 		ear1="Dignitary's Earring",
 		ear2="Regal Earring",
-        body="Atrophy Tabard +3",
+		body="Atrophy Tabard +3",
 		hands={ name="Kaykaus Cuffs +1", augments={'MP+80','MND+12','Mag. Acc.+20',}},
 		ring1="Stikini ring",
 		ring2="Stikini Ring",
-        back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},
+		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},
 		waist="Luminary Sash",
 		legs={ name="Chironic Hose", augments={'Mag. Acc.+22 "Mag.Atk.Bns."+22','MND+6','Mag. Acc.+14',}},
 		feet="Vitiation Boots +3",}
-	
 
-	
+
+
 	sets.midcast['Enfeebling Magic'].Skill = {    
 		main="Grioavolr",
 		sub="Enki Strap",
@@ -481,14 +481,14 @@ function init_gear_sets()
 		right_ring="Stikini Ring",
 		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},
 		}
-    
+
 	sets.Saboteur = set_combine(sets.midcast['Enfeebling Magic'].Potency, {hands="Lethargy Gantherots +1"})
-	
+
 	sets.Dia = {head="Vitiation Chapeau +3"}
 	
 	sets.midcast['Enfeebling Magic'].ParalyzeDuration = {feet="Vitiation Boots +3",}
-	
-    sets.midcast['Elemental Magic'] = {
+
+	sets.midcast['Elemental Magic'] = {
 		main="Raetic Staff +1",
 		sub="Niobid Strap",
 		ammo="Pemphredo Tathlum",
@@ -504,7 +504,7 @@ function init_gear_sets()
 		left_ring="Shiva Ring +1",
 		right_ring="Shiva Ring +1",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
-		
+
 	sets.midcast['Elemental Magic'].Burst = {    
 		main="Raetic Staff +1",
 		sub="Enki Strap",
@@ -521,15 +521,15 @@ function init_gear_sets()
 		left_ring="Mujin Band",
 		right_ring="Shiva Ring +1",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
-    
-	
+
+
 	sets.Obi = {waist="Hachirin-no-Obi",}
-	
+
 	--Impact is elemental magic that should STRONGLY favor magic accuracy.
 	--The additional stat down effect is far more important than the damage it deals.
 	--As elemental magic, it is INT based.
 	--When using eletta bow for m.acc, if the set you are combining with uses gem, you must specify empty ammo to prevent misequip.
-    sets.midcast.Impact = set_combine(sets.midcast['Elemental Magic'], {
+	sets.midcast.Impact = set_combine(sets.midcast['Elemental Magic'], {
 		main="Raetic Staff +1",
 		sub="Enki Strap",
 		range="Eletta Bow",
@@ -547,7 +547,7 @@ function init_gear_sets()
 		right_ring="Stikini Ring",
 		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},})
 
-    sets.midcast['Dark Magic'] = {
+	sets.midcast['Dark Magic'] = {
 		main={ name="Grioavolr", augments={'Enfb.mag. skill +14','Mag. Acc.+28','"Mag.Atk.Bns."+17','Magic Damage +7',}},
 		sub="Enki Strap",
 		ammo="Regal Gem",
@@ -565,23 +565,23 @@ function init_gear_sets()
 		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},}
 
 
-    sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring1="Evanescence ring",
+	sets.midcast.Drain = set_combine(sets.midcast['Dark Magic'], {ring1="Evanescence ring",
 		ring2="Archon Ring",
 		waist="Fucho-no-Obi",
 		head="Pixie Hairpin +1",
 		neck="Erra Pendant",
 		feet={ name="Vitiation Boots +3", augments={'Enhances "Paralyze II" effect',}},})
 
-    sets.midcast.Aspir = sets.midcast.Drain
-		
+	sets.midcast.Aspir = sets.midcast.Drain
+
 	sets.midcast.Utsusemi = {ammo="Incantor Stone",
-        head="Carmine Mask +1",
+		head="Carmine Mask +1",
 		ear2="Loquacious Earring",
-        body="Vitiation Tabard +3",
+		body="Vitiation Tabard +3",
 		hands="Leyline Gloves",
 		ring1="Prolix Ring",
 		ring2="Kishar Ring",
-        back="Swith Cape +1",
+		back="Swith Cape +1",
 		waist="Witful Belt",
 		legs="Psycloth Lappas",
 		feet="Carmine Greaves +1"}	
@@ -597,7 +597,7 @@ function init_gear_sets()
 --===============================================================================--
 
 
-    sets.precast.WS = {
+	sets.precast.WS = {
 		ammo="Yetshila",
 		head="Ayanmo Zucchetto +2",
 		body="Ayanmo Corazza +2",
@@ -612,7 +612,7 @@ function init_gear_sets()
 		right_ring="Ilabrat Ring",
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','"Dbl.Atk."+10',}}}
 
-    sets.precast.WS['Requiescat'] = {
+	sets.precast.WS['Requiescat'] = {
 		ammo="Regal Gem",
 		head={ name="Viti. Chapeau +3", augments={'Enhances "Dia III" effect','Enhances "Slow II" effect',}},
 		body={ name="Viti. Tabard +3", augments={'Enhances "Chainspell" effect',}},
@@ -627,7 +627,7 @@ function init_gear_sets()
 		right_ring="Rufescent Ring",
 		back={ name="Sucellos's Cape", augments={'MND+20','Mag. Acc+20 /Mag. Dmg.+20','MND+10','"Dbl.Atk."+10',}},}
 
-    sets.precast.WS['Sanguine Blade'] = {
+	sets.precast.WS['Sanguine Blade'] = {
 		ammo="Pemphredo Tathlum",
 		head={ name="Merlinic Hood", augments={'Mag. Acc.+24 "Mag.Atk.Bns."+24','Magic burst dmg.+8%','Mag. Acc.+2','"Mag.Atk.Bns."+13',}},
 		body={ name="Merlinic Jubbah", augments={'Mag. Acc.+25 "Mag.Atk.Bns."+25','Mag. Acc.+12','"Mag.Atk.Bns."+10',}},
@@ -642,7 +642,7 @@ function init_gear_sets()
 		right_ring="Shiva Ring +1",
 		back="Izdubar Mantle",}
 
-    sets.precast.WS['Savage Blade'] = {
+	sets.precast.WS['Savage Blade'] = {
 		ammo="Regal Gem",
 		head="Viti. Chapeau +3",
 		body="Vitiation Tabard +3",
@@ -711,22 +711,20 @@ function init_gear_sets()
 ----																								----
 --------------------------------------------------------------------------------------------------------
         
-    sets.buff.ComposureOther = set_combine(sets.midcast['Enhancing Magic'].SelfDuration, {
+	sets.buff.ComposureOther = set_combine(sets.midcast['Enhancing Magic'].SelfDuration, {
 		head="Lethargy Chappel +1",
 		neck="Duelist's Torque +2",
-        body="Vitiation Tabard +3",
+		body="Vitiation Tabard +3",
 		hands="Atrophy Gloves +3",
-        legs="Lethargy Fuseau +1",
+		legs="Lethargy Fuseau +1",
 		feet="Lethargy Houseaux +1"})
-		
+
 	sets.Adoulin = {body="Councilor's Garb",}
 
-    sets.MoveSpeed = {legs="Carmine Cuisses +1",}
-		
-	sets.ConsMP = {body="Seidr Cotehardie"}
+	sets.MoveSpeed = {legs="Carmine Cuisses +1",}
 
 	sets.Dyna_RP_Farm = {neck="Duelist's Torque +2",}
-	
+
 	--Fallback for Macc ammo when we have ranged slot locked (e.g. Meleeing)
 	sets.MaccAmmo = {range=empty,ammo="Regal Gem"}
 	
@@ -739,7 +737,7 @@ function init_gear_sets()
 --=================================--
 
 
-    sets.idle.Normal = {main="Terra's Staff",
+	sets.idle.Normal = {main="Terra's Staff",
 		sub="Irenic Strap +1",
 		ammo="Homiliary",
 		head="Viti. Chapeau +3",
@@ -755,7 +753,7 @@ function init_gear_sets()
 		right_ring="Defending Ring",
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},}
 
-    sets.idle.Town = {
+	sets.idle.Town = {
 		main="Terra's Staff",
 		sub="Irenic Strap +1",
 		ammo="Homiliary",
@@ -772,7 +770,7 @@ function init_gear_sets()
 		right_ring="Defending Ring",
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},}
     
-    sets.idle.Weak = {
+	sets.idle.Weak = {
 		main="Terra's Staff",
 		sub="Irenic Strap +1",
 		ammo="Staunch Tathlum +1",
@@ -789,7 +787,7 @@ function init_gear_sets()
 		right_ring="Defending Ring",
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},}
 
-    sets.idle.PDT = {
+	sets.idle.PDT = {
 		main="Terra's Staff",
 		sub="Irenic Strap +1",
 		ammo="Staunch Tathlum +1",
@@ -806,7 +804,7 @@ function init_gear_sets()
 		right_ring="Defending Ring",
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},} 
 
-    sets.idle.MDT = {
+	sets.idle.MDT = {
 		main="Terra's Staff",
 		sub="Irenic Strap +1",
 		ammo="Staunch Tathlum +1",
@@ -824,7 +822,7 @@ function init_gear_sets()
 		back={ name="Sucellos's Cape", augments={'DEX+20','Accuracy+20 Attack+20','DEX+10','"Dbl.Atk."+10','Phys. dmg. taken-10%',}},}
 		
 
-    sets.latent_refresh = {waist="Fucho-no-obi"}
+	sets.latent_refresh = {waist="Fucho-no-obi"}
 
 --====================================================--
 --     _____   ____      ____           _             --
@@ -836,7 +834,7 @@ function init_gear_sets()
 	
 	sets.default_melee_weapons = {main="Sequence", sub="Ternion Dagger +1",}
 	
-    sets.engaged = {
+	sets.engaged = {
 		ammo="Ginsen",
 		head="Aya. Zucchetto +2",
 		body="Ayanmo Corazza +2",
@@ -960,11 +958,7 @@ function job_post_midcast(spell, action, spellMap, eventArgs)
 		equip(sets.midcast['Enfeebling Magic'].Potency)
 	elseif spell.skill == 'Enfeebling Magic' and (spell.english:startswith('Paralyze') and (state.Enfeeb.Value == 'Accuracy' or state.Enfeeb.Value == 'Skill')) then
 		equip(set_combine(sets.midcast['Enfeebling Magic'].Accuracy, sets.midcast['Enfeebling Magic'].ParalyzeDuration))
-	end
-	
-	if spell.skill == 'Elemental Magic' and spell.english ~= 'Impact' and (player.mp-spell.mp_cost) < 600 then
-		equip(sets.ConsMP)
-	end		
+	end	
 	
 	if spell.skill == 'Elemental Magic' and (spell.element == world.weather_element or spell.element == world.day_element) then
         equip(sets.Obi)
