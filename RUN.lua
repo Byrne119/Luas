@@ -339,10 +339,15 @@ windower.raw_register_event('prerender',function()
     if mov.counter>15 then
         local pl = windower.ffxi.get_mob_by_index(player.index)
         if pl and pl.x and mov.x and state.EngagedMoving.Value == 'Disabled' then
+			--we want this to return a false value if these conditions were met, but we drew our weapons whilst moving.
+			--we also want this value to become false if we Disable EngagedMovement while engaged.
+			if state.Moving.value == 'true' and player.status == 'Engaged' then
+				state.Moving.value = 'false'
+			end
 			if player.status ~= 'Engaged' then
 				dist = math.sqrt( (pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2 )
 				if dist > 1 and not moving then
-					state.Moving.value = true
+					state.Moving.value = 'true'
 					send_command('gs c update')
 					if world.area:contains("Adoulin") then
 						send_command('gs equip sets.Adoulin')
@@ -353,7 +358,7 @@ windower.raw_register_event('prerender',function()
 					moving = true
 
 				elseif dist < 1 and moving then
-					state.Moving.value = false
+					state.Moving.value = 'false'
 					send_command('gs c update')
 					moving = false
 				end
@@ -361,7 +366,7 @@ windower.raw_register_event('prerender',function()
         elseif pl and pl.x and mov.x and state.EngagedMoving.Value == 'Enabled' then
 			dist = math.sqrt( (pl.x-mov.x)^2 + (pl.y-mov.y)^2 + (pl.z-mov.z)^2 )
 			if dist > 1 and not moving then
-				state.Moving.value = true
+				state.Moving.value = 'true'
 				send_command('gs c update')
 				if world.area:contains("Adoulin") then
 					send_command('gs equip sets.Adoulin')
@@ -372,7 +377,7 @@ windower.raw_register_event('prerender',function()
 				moving = true
 
 			elseif dist < 1 and moving then
-				state.Moving.value = false
+				state.Moving.value = 'false'
 				send_command('gs c update')
 				moving = false
 			end
@@ -384,6 +389,7 @@ windower.raw_register_event('prerender',function()
         end
         mov.counter = 0
     end
+	
 end)
 
 windower.register_event('zone change', function()
