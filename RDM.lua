@@ -629,18 +629,18 @@ function init_gear_sets()
 
 	sets.precast.WS['Sanguine Blade'] = {
 		ammo="Pemphredo Tathlum",
-		head={ name="Merlinic Hood", augments={'Mag. Acc.+24 "Mag.Atk.Bns."+24','Magic burst dmg.+8%','Mag. Acc.+2','"Mag.Atk.Bns."+13',}},
+		head="Pixie Hairpin +1",
 		body={ name="Merlinic Jubbah", augments={'Mag. Acc.+25 "Mag.Atk.Bns."+25','Mag. Acc.+12','"Mag.Atk.Bns."+10',}},
-		hands={ name="Amalric Gages", augments={'MP+60','Mag. Acc.+15','"Mag.Atk.Bns."+15',}},
+		hands="Jhakri Cuffs +2",
 		legs={ name="Merlinic Shalwar", augments={'Mag. Acc.+25 "Mag.Atk.Bns."+25','Mag. crit. hit dmg. +4%','MND+4','Mag. Acc.+11','"Mag.Atk.Bns."+14',}},
-		feet={ name="Merlinic Crackows", augments={'Mag. Acc.+23 "Mag.Atk.Bns."+23','Magic burst dmg.+8%','Mag. Acc.+11',}},
+		feet={ name="Vitiation Boots +3", augments={'Enhances "Paralyze II" effect',}},
 		neck="Sanctity Necklace",
 		waist="Eschan Stone",
-		left_ear="Hecate's Earring",
+		left_ear="Regal Earring",
 		right_ear="Friomisi Earring",
-		left_ring="Shiva Ring +1",
-		right_ring="Shiva Ring +1",
-		back="Izdubar Mantle",}
+		left_ring="Karieyh Ring +1",
+		right_ring="Archon Ring",
+		back={ name="Sucellos's Cape", augments={'INT+20','Mag. Acc+20 /Mag. Dmg.+20','INT+10','"Fast Cast"+10',}},}
 
 	sets.precast.WS['Savage Blade'] = {
 		ammo="Regal Gem",
